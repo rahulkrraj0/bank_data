@@ -19,7 +19,7 @@ models = {
 def train_model(X_train, y_train, models=models):
 
 
-    mlflow.set_experiment("bank_loan_prediction")
+    mlflow.set_experiment("bank_loan")
 
     trained_models = {}
 
