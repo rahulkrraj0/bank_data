@@ -4,7 +4,8 @@ from sklearn.preprocessing import StandardScaler
 
 def transform_data(file_path):
 
-    """Transforms the data for machine learning.
+    """
+    Transforms the data for machine learning.
         Args:
         file_path (str): The path to the CSV file containing the data.
     Returns:

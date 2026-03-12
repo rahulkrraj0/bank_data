@@ -2,29 +2,41 @@ import mlflow
 import mlflow.sklearn
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
-def train_model(X_train, y_train):
+models = {
+    "LogisticRegression": LogisticRegression(max_iter=1000),
+    "DecisionTree": DecisionTreeClassifier(),
+    "RandomForest": RandomForestClassifier()
+}
 
-    model = LogisticRegression(max_iter=1000)
+
+
+
+def train_model(X_train, y_train, models=models):
+
 
     mlflow.set_experiment("bank_loan_prediction")
 
-    with mlflow.start_run():
+    trained_models = {}
 
-        # log parameters
-        mlflow.log_param("model", "LogisticRegression")
-        mlflow.log_param("max_iter", 1000)
+    for name, model in models.items():
 
-        # train model
-        model.fit(X_train, y_train)
+        with mlflow.start_run(run_name=name):
 
+            # log parameters
+            mlflow.log_param("model", name)
 
-        # log model
-        mlflow.sklearn.log_model(
-            sk_model=model,
-            name="loan_model"
-            
-        )
+            # train model
+            model.fit(X_train, y_train)
 
-    return model
+            # log model
+            mlflow.sklearn.log_model(
+                sk_model=model,
+                name=name
+            )
+
+            trained_models[name] = model
+
+    return trained_models

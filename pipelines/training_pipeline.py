@@ -22,9 +22,31 @@ def run_training_pipeline():
 
     model = train_model(X_train, y_train)
 
-    evaluate_model(model, X_test, y_test)
+    best_model = None
+    best_score = 0
 
-    mlflow.sklearn.log_model(model, "new model")
+    for model in model:
+
+        accuracy, precision, recall, f1 = evaluate_model(model, X_test, y_test)
+
+        with mlflow.start_run(run_name=model):
+
+            mlflow.log_metric("accuracy", accuracy)
+            mlflow.log_metric("precision", precision)
+            mlflow.log_metric("recall", recall)
+            mlflow.log_metric("f1_score", f1)
+
+            mlflow.sklearn.log_model(model, model)
+            
+
+        # select best model
+        if accuracy > best_score:
+            best_score = accuracy
+            best_model = model
+
+    # log best model
+    mlflow.sklearn.log_model(best_model, "best_model")
+    
 
 # if __name__ == "__main__":
 run_training_pipeline()
