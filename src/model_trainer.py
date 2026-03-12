@@ -4,6 +4,8 @@ import mlflow.sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 models = {
     "LogisticRegression": LogisticRegression(max_iter=1000),
