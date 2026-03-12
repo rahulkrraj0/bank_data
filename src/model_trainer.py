@@ -4,7 +4,7 @@ import mlflow.sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-def train_model(X_train, X_test, y_train, y_test):
+def train_model(X_train, y_train):
 
     model = LogisticRegression(max_iter=1000)
 
@@ -19,18 +19,12 @@ def train_model(X_train, X_test, y_train, y_test):
         # train model
         model.fit(X_train, y_train)
 
-        # prediction
-        preds = model.predict(X_test)
-
-        accuracy = accuracy_score(y_test, preds)
-
-        # log metrics
-        mlflow.log_metric("accuracy", accuracy)
 
         # log model
         mlflow.sklearn.log_model(
             sk_model=model,
             name="loan_model"
+            
         )
 
     return model
