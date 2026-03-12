@@ -1,0 +1,21 @@
+# virtual environment
+.venv/
+
+# python cache
+__pycache__/
+
+# mlflow artifacts
+mlruns/
+mlflow.db
+
+# dvc storage
+dvc_storage/
+
+# logs
+*.log
+
+# jupyter
+.ipynb_checkpoints/
+
+#data
+data/
