@@ -1,0 +1,21 @@
+# Configuration file for the MLFlow project
+
+# File paths
+data:
+  cleaned_data_path: "data/processed/bpl_data_cleaned.csv"
+
+# Model paths
+model:
+  path: "models/model.pkl"
+
+# Model training
+training:
+  experiment_name: "bank_loan"
+  models:
+    LogisticRegression:
+      params:
+        max_iter: 1000
+    DecisionTree:
+      params: {}
+    RandomForest:
+      params: {}

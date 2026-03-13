@@ -2,7 +2,8 @@
 import sys
 import os
 import mlflow
-import skops.io as sio
+import mlflow.sklearn
+import pickle
 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -25,9 +26,6 @@ def run_training_pipeline():
     best_model = None
     best_score = 0
 
-    # Create a directory to store skops models
-    os.makedirs("skops_models", exist_ok=True)
-
     for name, model in trained_models.items():
 
         accuracy, precision, recall, f1 = evaluate_model(model, X_test, y_test)
@@ -38,12 +36,9 @@ def run_training_pipeline():
             mlflow.log_metric("precision", precision)
             mlflow.log_metric("recall", recall)
             mlflow.log_metric("f1_score", f1)
-
+            
             print(f"\nModel: {name}\nAccuracy: {accuracy}\nPrecision: {precision}\nRecall: {recall}\nF1 Score: {f1}")
-            # Save model with skops and log as artifact
-            skops_path = os.path.join("skops_models", f"{name}.skops")
-            sio.dump(model, skops_path)
-            mlflow.log_artifact(skops_path, artifact_path="skops_model")
+            mlflow.sklearn.log_model(model, name)
             
 
         # select best model
@@ -52,13 +47,12 @@ def run_training_pipeline():
             best_model = model
 
     # log best model
-    with mlflow.start_run(run_name="best_model"):
-        mlflow.log_metric("accuracy", best_score)
-        
-        # Save best model with skops and log as artifact
-        skops_path = os.path.join("skops_models", "best_model.skops")
-        sio.dump(best_model, skops_path)
-        mlflow.log_artifact(skops_path, artifact_path="best_model_skops")
+    mlflow.sklearn.log_model(best_model, "best_model")
+
+    # Save the best model as a pickle file
+    os.makedirs("models", exist_ok=True)
+    with open("models/model.pkl", "wb") as f:
+        pickle.dump(best_model, f)
     
 
 # if __name__ == "__main__":
