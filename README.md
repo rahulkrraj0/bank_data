@@ -1,10 +1,20 @@
 # Bank Loan Prediction
 
-This project is an end-to-end machine learning project that predicts whether a person will get a bank loan or not. It uses MLFlow for experiment tracking, DVC for data version control, and FastAPI for the user interface.
+This project is an end-to-end machine learning project that predicts whether a person will get a bank loan or not. It uses MLFlow for experiment tracking and DVC for data version control.
 
 ## Overview
 
-This project is designed to predict bank loan eligibility. It includes data cleaning, model training, a prediction pipeline, and a web-based user interface. The project is structured to be scalable and maintainable, using MLOps best practices.
+This project is designed to predict bank loan eligibility. It includes data cleaning, model training, and a prediction pipeline. The project is structured to be scalable and maintainable, using MLOps best practices.
+
+## Technologies Used
+
+*   Python
+*   Pandas
+*   Scikit-learn
+*   MLflow
+*   DVC
+*   FastAPI
+*   Jinja2
 
 ## Installation
 
@@ -45,16 +55,6 @@ To make predictions, use the prediction pipeline:
 python pipelines/prediction_pipeline.py --data <path-to-your-data>
 ```
 
-### Web Application
-
-The project includes a FastAPI application to serve the model and provide a user interface. To run the app:
-
-```bash
-python app.py
-```
-
-You can then access the application at `http://127.0.0.1:8000`.
-
 ## Project Structure
 
 ```
@@ -63,7 +63,6 @@ You can then access the application at `http://127.0.0.1:8000`.
 ├── .git/
 ├── .gitignore
 ├── .venv/
-├── app.py
 ├── config/
 │   └── config.yaml
 ├── data/
@@ -81,17 +80,15 @@ You can then access the application at `http://127.0.0.1:8000`.
 ├── prediction.py
 ├── README.md
 ├── requirements.txt
-├── src/
-│   ├── data_transformation.py
-│   ├── model_evaluation.py
-│   ├── model_trainer.py
-│   └── utils/
-│       ├── common.py
-│       ├── delete_model.py
-│       ├── exception.py
-│       └── logger.py
-└── templates/
-    └── index.html
+└── src/
+    ├── data_transformation.py
+    ├── model_evaluation.py
+    ├── model_trainer.py
+    └── utils/
+        ├── common.py
+        ├── delete_model.py
+        ├── exception.py
+        └── logger.py
 ```
 
 ## MLflow Tracking
@@ -102,7 +99,7 @@ This project uses MLflow for experiment tracking. The MLflow UI can be launched 
 mlflow ui
 ```
 
-The UI will be available at `http://12-7.0.0.1:5000` by default. The experiments are logged under the experiment name "bank_loan".
+The UI will be available at `http://127.0.0.1:5000` by default. The experiments are logged under the experiment name "bank_loan".
 
 ## DVC
 
@@ -111,3 +108,14 @@ Data Version Control (DVC) is used to manage the data. To pull the data, run:
 ```bash
 dvc pull
 ```
+
+## WebApp using FastAPI
+
+This projech have app.py file which is use to run the web app. To run the appuvicorn app.py:
+
+```bash
+    uvicorn app:app --reload
+
+```bash
+
+
