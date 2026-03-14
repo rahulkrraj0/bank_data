@@ -116,6 +116,6 @@ This projech have app.py file which is use to run the web app. To run the appuvi
 ```bash
     uvicorn app:app --reload
 
-```bash
+```
 
 
